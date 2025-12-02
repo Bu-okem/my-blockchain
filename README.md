@@ -2,9 +2,11 @@
 
 This is a simple implementation of a blockchain in Rust, created for educational purposes to understand the basic concepts of blockchain technology.
 
+This project uses Proof of Work (PoW) algorithm to secure the blockchain.
+
 ## Features
 
-*   **Block:** Represents a single block in the blockchain with properties like `index`, `timestamp`, `data`, `previous_hash`, and `hash`.
+*   **Block:** Represents a single block in the blockchain with properties like `index`, `timestamp`, `data`, `previous_hash`, `nonce` and `hash`.
 *   **Blockchain:** Manages the chain of blocks, including adding new blocks and validating the integrity of the chain.
 *   **Hashing:** Uses SHA-256 to calculate the hash of each block, ensuring the immutability of the data.
 
