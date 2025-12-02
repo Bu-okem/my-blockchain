@@ -2,7 +2,7 @@ use sha2::{Digest, Sha256};
 use std::time::{SystemTime, UNIX_EPOCH};
 
 fn main() {
-    println!("Hello, world!");
+    println!("GM!")
 }
 
 struct Block {
@@ -32,7 +32,7 @@ impl Block {
 
     fn mine_block(&mut self, difficulty: usize) {
         let mut zeroes = String::from("");
-        for i in 0..difficulty {
+        for _i in 0..difficulty {
             zeroes.push('0');
         }
 
