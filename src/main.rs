@@ -9,6 +9,7 @@ struct Block {
     index: u64,
     timestamp: String,
     data: String,
+    nonce: u64,
     previous_hash: String,
     hash: String,
 }
@@ -16,8 +17,8 @@ struct Block {
 impl Block {
     fn joined_values(&self) -> String {
         format!(
-            "{}{}{}{}",
-            self.index, self.timestamp, self.data, self.previous_hash
+            "{}{}{}{}{}",
+            self.index, self.timestamp, self.data, self.nonce, self.previous_hash
         )
     }
 
@@ -27,6 +28,26 @@ impl Block {
         hasher.update(string_data.as_bytes());
         let result = hasher.finalize();
         format!("{:x}", result)
+    }
+
+    fn mine_block(&mut self, difficulty: usize) {
+        let mut zeroes = String::from("");
+        for i in 0..difficulty {
+            zeroes.push('0');
+        }
+
+        loop {
+            let hash = self.calculate_hash();
+
+            if hash.starts_with(&zeroes) {
+                self.hash = hash;
+                break;
+            } else {
+                self.nonce += 1;
+            }
+        }
+
+        println!("Block mined: {}", self.hash);
     }
 }
 
@@ -39,6 +60,7 @@ impl Blockchain {
         let mut genesis_block = Block {
             index: 0,
             timestamp: "0".to_string(),
+            nonce: 0,
             previous_hash: "0".to_string(),
             hash: "".to_string(),
             data: "genesis".to_string(),
@@ -62,10 +84,11 @@ impl Blockchain {
                 None => "".to_string(),
             },
             data: data,
+            nonce: 0,
             hash: String::from(""),
         };
 
-        new_block.hash = new_block.calculate_hash();
+        new_block.mine_block(2);
 
         self.chain.push(new_block);
     }
